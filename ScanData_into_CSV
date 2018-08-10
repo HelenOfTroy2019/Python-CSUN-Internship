@@ -1,0 +1,42 @@
+import csv
+
+text_file = open("sample_data_component.txt",  "r")
+lines = text_file.readlines()
+
+mycsv = csv.writer(open('OutPut.csv', 'wb'))
+mycsv.writerow(['compoundID', 'name', 'formula', 'weight', 'dbCode', 'smile', 'inchi'])
+
+compoundID = ""
+name = ""
+formula = ""
+weight = ""
+dbCode = ""
+smile = ""
+inchi = ""
+
+for line in lines:
+	if "_chem_comp.id" in line:
+		compoundID = line.split("_chem_comp.id") [1]
+		compoundID.replace(" ", "")
+	if "_chem_comp.name" in line:
+		name = line.split("_chem_comp.name") [1]
+		name.replace(" ", "")
+	if "_chem_comp.formula" in line:
+		formula = line.split("_chem_comp.formula") [1]
+		formula.replace(" ", "")
+	if "_chem_comp.formula_weight" in line:
+		weight = line.split("_chem_comp.formula_weight") [1]
+		weight.replace(" ", "")
+	if "_chem_comp.pdbx_model_coordinates_db_code" in line:
+		dbCode = line.split("_chem_comp.pdbx_model_coordinates_db_code") [1]
+		dbCode.replace(" ", "")
+	if "SMILES_CANONICAL \"OpenEye OEToolkits\"" in line:
+		smile = line.split("SMILES_CANONICAL \"OpenEye OEToolkits\"") [1]
+		smile.replace(" ", "")
+	if "InChIKey" in line:
+		inchi = line.split("InChIKey") [1]
+		inchi.replace(" ", "")
+	mycsv.writerow([compoundID, name, formula, weight, dbCode, smile, inchi])
+
+
+text_file.close()
